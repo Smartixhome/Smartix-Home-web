@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="es">
+<head> 
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smartix Home - Domótica y Casas Inteligentes en Guatemala</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            line-height: 1.6;
+            color: #333;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #183B4E 0%, #27548A 100%);
+            color: white;
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255,255,255,0.2);
+            transform: translateY(-2px);
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, #183B4E 0%, #27548A 100%);
+            color: white;
+            padding: 120px 0 80px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><circle cx="20" cy="20" r="2" fill="rgba(255,255,255,0.1)"/><circle cx="80" cy="40" r="1.5" fill="rgba(255,255,255,0.1)"/><circle cx="40" cy="60" r="1" fill="rgba(255,255,255,0.1)"/><circle cx="70" cy="80" r="2.5" fill="rgba(255,255,255,0.1)"/></svg>');
+            animation: float 20s infinite linear;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+            animation: slideInUp 1s ease-out;
+        }
+
+        @keyframes slideInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            animation: slideInUp 1s ease-out 0.2s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(45deg, #DDA853, #F3F3E0);
+            color: #183B4E;
+            padding: 1rem 2rem;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(221,168,83,0.4);
+            animation: slideInUp 1s ease-out 0.4s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(221,168,83,0.6);
+            background: linear-gradient(45deg, #F3F3E0, #DDA853);
+        }
+
+        /* Features Section */
+        .features {
+            padding: 80px 0;
+            background: #F3F3E0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #333;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 15px;
+            text-align: center;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+            border: 2px solid rgba(24,59,78,0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.15);
+            border-color: #DDA853;
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            color: #183B4E;
+        }
+
+        .feature-card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            color: #333;
+        }
+
+        .feature-card p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Products Section */
+        .products {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #27548A 0%, #183B4E 100%);
+            color: white;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .product-category {
+            margin-bottom: 3rem;
+        }
+
+        .category-title {
+            text-align: center;
+            font-size: 1.8rem;
+            margin-bottom: 2rem;
+            color: #DDA853;
+            font-weight: bold;
+        }
+
+        .brands-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .brand-card {
+            background: rgba(243,243,224,0.1);
+            padding: 1.5rem;
+            border-radius: 15px;
+            text-align: center;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(221,168,83,0.3);
+            transition: all 0.3s ease;
+        }
+
+        .brand-card:hover {
+            transform: translateY(-5px);
+            background: rgba(243,243,224,0.2);
+            border-color: #DDA853;
+        }
+
+        .brand-logo {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            padding: 0.8rem;
+            background: rgba(221,168,83,0.2);
+            border-radius: 10px;
+            display: inline-block;
+            color: #DDA853;
+        }
+
+        .brand-card p {
+            font-size: 0.9rem;
+            color: #F3F3E0;
+        }
+
+        /* Services Section */
+        .services {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            padding: 2rem;
+            border-left: 4px solid #DDA853;
+            background: white;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        .service-card:hover {
+            background: #F3F3E0;
+            transform: translateX(10px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .service-card h3 {
+            color: #183B4E;
+            margin-bottom: 1rem;
+        }
+
+        /* Contact Section */
+        .contact {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .contact-form {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 2rem;
+            background: rgba(255,255,255,0.1);
+            border-radius: 15px;
+            backdrop-filter: blur(10px);
+        }
+
+        .form-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .form-group input,
+        .form-group textarea {
+            width: 100%;
+            padding: 1rem;
+            border: none;
+            border-radius: 10px;
+            background: rgba(255,255,255,0.9);
+            color: #333;
+            font-size: 1rem;
+        }
+
+        .form-group textarea {
+            height: 120px;
+            resize: vertical;
+        }
+
+        .submit-button {
+            background: linear-gradient(45deg, #ff6b6b, #ee5a24);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(255,107,107,0.4);
+        }
+
+        .submit-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(255,107,107,0.6);
+        }
+
+        /* Footer */
+        footer {
+            background: #333;
+            color: white;
+            text-align: center;
+            padding: 2rem 0;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #DDA853;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+
+            .hero p {
+                font-size: 1.1rem;
+            }
+
+            .features-grid,
+            .products-grid,
+            .services-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-links {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* Smooth Scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <nav>
+            <div class="logo">Smartix Home</div>
+            <ul class="nav-links">
+                <li><a href="#inicio">Inicio</a></li>
+                <li><a href="#servicios">Servicios</a></li>
+                <li><a href="#productos">Productos</a></li>
+                <li><a href="#contacto">Contacto</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="inicio">
+        <div class="hero-content">
+            <h1>Convierte tu Casa en una Casa Inteligente</h1>
+            <p>Somos los líderes en domótica en Guatemala. Instalamos y configuramos sistemas inteligentes para tu hogar con la más alta tecnología.</p>
+            <a href="#contacto" class="cta-button">Solicitar Cotización</a>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" id="caracteristicas">
+        <div class="container">
+            <h2 class="section-title">¿Por qué elegir Smartix Home?</h2>
+            <div class="features-grid">
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🏠</div>
+                    <h3>Instalación Profesional</h3>
+                    <p>Nuestro equipo certificado instala todos los dispositivos de forma segura y eficiente, garantizando el mejor rendimiento de tu sistema inteligente.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">📱</div>
+                    <h3>Control Total</h3>
+                    <p>Controla luces, temperatura, seguridad y más desde tu smartphone. Automatiza tu hogar para mayor comodidad y eficiencia energética.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🔧</div>
+                    <h3>Soporte Técnico</h3>
+                    <p>Ofrecemos soporte técnico continuo y mantenimiento para asegurar que tu sistema funcione perfectamente durante años.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Seguridad Avanzada</h3>
+                    <p>Sistemas de seguridad inteligentes con cámaras, sensores y alertas en tiempo real para proteger tu hogar las 24/7.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Eficiencia Energética</h3>
+                    <p>Reduce tu consumo eléctrico hasta un 30% con automatización inteligente y monitoreo en tiempo real de tus dispositivos.</p>
+                </div>
+                <div class="feature-card fade-in">
+                    <div class="feature-icon">🇬🇹</div>
+                    <h3>Empresa Guatemalteca</h3>
+                    <p>Somos una empresa local que entiende las necesidades del mercado guatemalteco y ofrecemos precios competitivos.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products" id="productos">
+        <div class="container">
+            <h2 class="section-title" style="color: #fff;">Productos y Marcas</h2>
+            
+            <!-- Routers y Mesh -->
+            <div class="product-category">
+                <h3 class="category-title">🌐 Routers y Sistemas Mesh</h3>
+                <div class="brands-grid">
+                    <div class="brand-card fade-in">
+                        <div class="brand-logo">UBIQUITI UniFi</div>
+                        <p>Sistemas empresariales para redes robustas y escalables</p>
+                    </div>
+                    <div class="brand-card fade-in">
+                        <div class="brand-logo">TP-LINK Omada</div>
+                        <p>Soluciones profesionales de red con gestión centralizada</p>
+                    </div>
+                    <div class="brand-card fade-in">
+                        <div class="brand-logo">ASUS AiMesh</div>
+                        <p>Tecnología mesh avanzada para cobertura total</p>
+                    </div>
+                    <div class="brand-card fade-in">
+                        <div class="brand-logo">TP-LINK Deco</div>
+                        <p>Sistemas mesh fáciles de usar para hogares</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Seguridad -->
+            <div class="product-category">
+                <h3 class="category-title">🛡️ Sistemas de Seguridad</h3>
+                <div class="brands-grid">
+                    <div class="brand-card fade-in">
+                        <div class="brand-logo">AQARA</div>
+                        <p>Sensores y cámaras inteligentes con integración HomeKit</p>
+                    </div>
+                    <div class="brand-card fade-in">
+                        <div class="brand-logo">HIKVISION</div>
+                        <p>Cámaras IP profesionales con IA y análisis avanzado</p>
+                    </div>
+                    <div class="brand-card fade-in">
+                        <div class="brand-logo">EUFY</div>
+                        <p>Seguridad inteligente sin cuotas mensuales</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Switches Inteligentes -->
+            <div class="product-category">
+                <h3 class="category-title">💡 Switches Inteligentes</h3>
+                <div class="brands-grid">
+                    <div class="brand-card fade-in">
+                        <div class="brand-logo">AQARA</div>
+                        <p>Switches elegantes con control remoto y automatización</p>
+                    </div>
+                    <div class="brand-card fade-in">
+                        <div class="brand-logo">MOES</div>
+                        <p>Switches WiFi compatibles con asistentes virtuales</p>
+                    </div>
+                    <div class="brand-card fade-in">
+                        <div class="brand-logo">TP-LINK</div>
+                        <p>Switches inteligentes confiables y fáciles de instalar</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Interruptores con Pantalla -->
+            <div class="product-category">
+                <h3 class="category-title">📱 Interruptores con Pantalla</h3>
+                <div class="brands-grid">
+                    <div class="brand-card fade-in">
+                        <div class="brand-logo">BRILLIANT</div>
+                        <p>Controles con pantalla táctil y cámara integrada</p>
+                    </div>
+                    <div class="brand-card fade-in">
+                        <div class="brand-logo">SONOFF</div>
+                        <p>Interruptores inteligentes con display LCD</p>
+                    </div>
+                    <div class="brand-card fade-in">
+                        <div class="brand-logo">ORVIBO</div>
+                        <p>Paneles táctiles elegantes con múltiples funciones</p>
+                    </div>
+                    <div class="brand-card fade-in">
+                        <div class="brand-logo">MOES</div>
+                        <p>Interruptores táctiles con control por voz</p>
+                    </div>
+                    <div class="brand-card fade-in">
+                        <div class="brand-logo">LANBON</div>
+                        <p>Paneles inteligentes con pantalla a color</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="services" id="servicios">
+        <div class="container">
+            <h2 class="section-title">Nuestros Servicios</h2>
+            <div class="services-grid">
+                <div class="service-card fade-in">
+                    <h3>Consultoría Personalizada</h3>
+                    <p>Evaluamos tu hogar y diseñamos un sistema de domótica adaptado a tus necesidades específicas y presupuesto.</p>
+                </div>
+                <div class="service-card fade-in">
+                    <h3>Instalación Completa</h3>
+                    <p>Instalamos todos los dispositivos, configuramos la red y dejamos tu sistema funcionando perfectamente.</p>
+                </div>
+                <div class="service-card fade-in">
+                    <h3>Configuración y Programación</h3>
+                    <p>Configuramos automatizaciones, escenas y programaciones para que tu hogar funcione según tus rutinas.</p>
+                </div>
+                <div class="service-card fade-in">
+                    <h3>Capacitación al Usuario</h3>
+                    <p>Te enseñamos a usar tu sistema inteligente y aprovecharlo al máximo con tutoriales personalizados.</p>
+                </div>
+                <div class="service-card fade-in">
+                    <h3>Mantenimiento Preventivo</h3>
+                    <p>Realizamos revisiones periódicas y actualizaciones para mantener tu sistema funcionando óptimamente.</p>
+                </div>
+                <div class="service-card fade-in">
+                    <h3>Soporte 24/7</h3>
+                    <p>Asistencia técnica disponible cuando la necesites, con respuesta rápida y soluciones efectivas.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="contact" id="contacto">
+        <div class="container">
+            <h2 class="section-title">Contáctanos</h2>
+            <p style="font-size: 1.2rem; margin-bottom: 2rem;">¿Listo para hacer tu hogar inteligente? Solicita una cotización gratuita</p>
+            <div class="contact-form">
+                <form id="contactForm">
+                    <div class="form-group">
+                        <label for="nombre">Nombre Completo</label>
+                        <input type="text" id="nombre" name="nombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Correo Electrónico</label>
+                        <input type="email" id="email" name="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="telefono">Teléfono</label>
+                        <input type="tel" id="telefono" name="telefono" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="mensaje">Mensaje</label>
+                        <textarea id="mensaje" name="mensaje" placeholder="Cuéntanos sobre tu proyecto de domótica..." required></textarea>
+                    </div>
+                    <button type="submit" class="submit-button">Enviar Consulta</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#inicio">Inicio</a>
+                <a href="#servicios">Servicios</a>
+                <a href="#productos">Productos</a>
+                <a href="#contacto">Contacto</a>
+            </div>
+            <p>&copy; 2025 Smartix Home. Todos los derechos reservados. | Domótica en Guatemala</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling animation
+        document.addEventListener('DOMContentLoaded', function() {
+            // Intersection Observer for fade-in animations
+            const observerOptions = {
+                threshold: 0.1,
+                rootMargin: '0px 0px -50px 0px'
+            };
+
+            const observer = new IntersectionObserver(function(entries) {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('visible');
+                    }
+                });
+            }, observerOptions);
+
+            // Observe all fade-in elements
+            document.querySelectorAll('.fade-in').forEach(el => {
+                observer.observe(el);
+            });
+
+            // Form submission handler
+            document.getElementById('contactForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                // Get form data
+                const formData = new FormData(this);
+                const nombre = formData.get('nombre');
+                const email = formData.get('email');
+                const telefono = formData.get('telefono');
+                const mensaje = formData.get('mensaje');
+                
+                // Simple validation
+                if (!nombre || !email || !telefono || !mensaje) {
+                    alert('Por favor, completa todos los campos.');
+                    return;
+                }
+                
+                // Simulate form submission
+                alert('¡Gracias por tu consulta! Te contactaremos pronto para ayudarte con tu proyecto de domótica.');
+                this.reset();
+            });
+
+            // Add floating animation to hero background
+            const hero = document.querySelector('.hero');
+            let mouseX = 0;
+            let mouseY = 0;
+
+            document.addEventListener('mousemove', function(e) {
+                mouseX = e.clientX / window.innerWidth;
+                mouseY = e.clientY / window.innerHeight;
+            });
+
+            // Parallax effect for hero
+            window.addEventListener('scroll', function() {
+                const scrolled = window.pageYOffset;
+                const parallax = document.querySelector('.hero');
+                const speed = 0.5;
+                
+                if (parallax) {
+                    parallax.style.transform = `translateY(${scrolled * speed}px)`;
+                }
+            });
+        });
+    </script>
+</body>
+</html>
